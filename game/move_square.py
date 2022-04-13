@@ -30,5 +30,6 @@ while runner:
             elif event.key == pygame.K_DOWN:
                 y+=20
                 x = x
-    square = pygame.draw.rect(screen, blue, pygame.Rect(x,y,10,10))
+    screen.fill(orange)
+    square = pygame.draw.rect(screen, blue, pygame.Rect(x,y,30,30))
     pygame.display.flip()
