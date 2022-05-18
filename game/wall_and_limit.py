@@ -1,3 +1,4 @@
+from cgitb import text
 import pygame
 import random
 
@@ -11,6 +12,7 @@ y = 520
 xs = 30
 ys = 30
 score = 0
+done = 0
 
 screen = pygame.display.set_mode((height, width))
 runner = True
@@ -21,6 +23,7 @@ def game():
     global runner
     global ys
     global score
+    global done
     man = pygame.image.load("img/user.png")
     rect = man.get_rect()
     rect.center = (x,y)
@@ -35,12 +38,11 @@ def game():
         xs = random.randrange(50,550)
         ys = random.randrange(50,550)
         score = score + 1
-    if score > 20:
-        screen.blit(text_two, (200,200))
+    if score >= 20:
+        done = 1
     font = pygame.font.Font('freesansbold.ttf', 40)
     text = font.render(f"score : {score}", True, (0,0,255))
-    text_two = font.render("The man has a full belly", True, (0,0,0))
-    screen.blit(text, (280, 10))
+    screen.blit(text, (300,0))
 while runner:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -54,6 +56,22 @@ while runner:
                 y = y + 20
             elif event.key == pygame.K_RIGHT:
                 x = x + 20
+    if 0<=x<=height and 0<=y<=width:
+        pass   
+    else:
+       runner = False
     screen.fill(red)
+    if done == 1:
+        while over:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    over = False
+                    runner = False
+            font = pygame.font.Font('freesansbold.ttf', 40)
+            text_two = font.render("The man has a full belly", True, (0,0,0))
+            screen.fill(red)
+            screen.blit(text_two, (100,100))
+            pygame.display.update()
+
     game()
     pygame.display.update()
